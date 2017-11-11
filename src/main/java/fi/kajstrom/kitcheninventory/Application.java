@@ -1,3 +1,5 @@
+package fi.kajstrom.kitcheninventory;
+
 import static spark.Spark.*;
 
 public class Application {
