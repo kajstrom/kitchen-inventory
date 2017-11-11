@@ -29,6 +29,6 @@ public class WalkingSkeletonTest {
 
         HttpResponse response = HttpClientBuilder.create().build().execute(request);
 
-        assertEquals(201, response.getStatusLine().getStatusCode());
+        assertEquals(200, response.getStatusLine().getStatusCode());
     }
 }
