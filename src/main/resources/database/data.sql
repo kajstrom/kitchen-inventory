@@ -1,0 +1,1 @@
+INSERT INTO ingredient_types (name, quantity_unit) VALUES ("Sugar", "Grams");

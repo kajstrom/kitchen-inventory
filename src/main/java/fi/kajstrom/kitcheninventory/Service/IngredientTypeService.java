@@ -1,18 +1,18 @@
 package fi.kajstrom.kitcheninventory.Service;
 
+
+import fi.kajstrom.kitcheninventory.Adapters.Database.IngredientTypeGateway;
+
 import java.util.*;
 
 public class IngredientTypeService {
+    private IngredientTypeGateway ingredientTypeGateway;
+
+    public IngredientTypeService(IngredientTypeGateway ingredientTypeGateway) {
+        this.ingredientTypeGateway = ingredientTypeGateway;
+    }
+
     public List<Map<String, Object>> fetchAllTypes() {
-        List<Map<String, Object>> types = new ArrayList<>();
-
-        Map<String, Object> sugar = new HashMap<>();
-        sugar.put("id", 1);
-        sugar.put("name", "Sugar");
-        sugar.put("quantity_unit", "Gram");
-
-        types.add(sugar);
-
-        return types;
+        return ingredientTypeGateway.all();
     }
 }
