@@ -19,17 +19,17 @@ public class Application {
     public static void main(String[] args) {
         try {
             String env = "prod";
-            if (args.length > 0 && args[0].equals("test")) {
+            Integer port = 7777;
+            if (isTestEnv(args)) {
                 env = "test";
+                port = 8888;
             }
 
-             connection = DriverManager.getConnection(connectionString(env));
-
+            connection = DriverManager.getConnection(connectionString(env));
             IngredientTypeGateway ingredientTypeGateway = new IngredientTypeGateway(connection);
-
             ingredientTypeService = new IngredientTypeService(ingredientTypeGateway);
 
-            port(7777);
+            port(port);
 
             get(Path.REST.INGREDIENTTYPES, IngredientTypeAdapter.fetchAllTypes);
         } catch (SQLException e) {
@@ -44,6 +44,9 @@ public class Application {
         } else {
             return "jdbc:mariadb://localhost:3306/kitcheninventory_test?user=travis&password=";
         }
+    }
 
+    private static Boolean isTestEnv(String[] args) {
+        return args.length > 0 && args[0].equals("test");
     }
 }

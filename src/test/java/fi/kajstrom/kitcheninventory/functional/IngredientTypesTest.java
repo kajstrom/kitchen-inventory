@@ -16,7 +16,7 @@ public class IngredientTypesTest extends FunctionalTest {
     public void testGetIngredientTypes_WhenCalled_ShouldReturnSugar()
         throws IOException {
 
-        HttpUriRequest request = new HttpGet("http://localhost:7777/ingredienttypes");
+        HttpUriRequest request = new HttpGet("http://localhost:8888/ingredienttypes");
 
         HttpResponse response = execute(request);
 
