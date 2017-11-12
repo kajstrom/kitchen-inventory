@@ -1,6 +1,7 @@
 package fi.kajstrom.kitcheninventory.functional;
 
 import fi.kajstrom.kitcheninventory.Application;
+import fi.kajstrom.kitcheninventory.util.DatabaseSetup;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -24,16 +25,8 @@ public class FunctionalTest {
         args[0] = "test";
         Application.main(args);
 
-        try {
-            Statement stmt = Application.connection.createStatement();
-            executeQueriesInFile(stmt, "/database/schema.sql");
-
-            stmt = Application.connection.createStatement();
-            executeQueriesInFile(stmt, "/database/data.sql");
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        DatabaseSetup dbSetup = new DatabaseSetup(Application.connection);
+        dbSetup.setup();
     }
 
     @AfterClass
@@ -52,22 +45,5 @@ public class FunctionalTest {
         response.getEntity().writeTo(out);
 
         return out.toString();
-    }
-
-    public static void executeQueriesInFile(Statement stmt, String file)
-        throws SQLException{
-        InputStream is = FunctionalTest.class.getResourceAsStream(file);
-
-        String result = new BufferedReader(new InputStreamReader(is))
-                .lines().collect(Collectors.joining("\n"));
-
-        String[] queries = result.split(";");
-        List<String> queryList = Arrays.asList(queries);
-
-        for (String query : queryList) {
-            stmt.addBatch(query);
-        }
-
-        stmt.executeBatch();
     }
 }
