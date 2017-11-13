@@ -25,7 +25,7 @@ public class Application {
                 port = 8888;
             }
 
-            connection = DriverManager.getConnection(connectionString(env));
+            connection = newDbConnection(env);
             IngredientTypeGateway ingredientTypeGateway = new IngredientTypeGateway(connection);
             ingredientTypeService = new IngredientTypeService(ingredientTypeGateway);
 
@@ -38,12 +38,17 @@ public class Application {
         }
     }
 
-    public static String connectionString(String env) {
+    public static Connection newDbConnection(String env)
+        throws SQLException{
+        String url;
+
         if (env.equals("prod")) {
-            return "jdbc:mariadb://localhost:3306/kitcheninventory?user=root&password=r00t";
+            url = "jdbc:mariadb://localhost:3306/kitcheninventory?user=root&password=r00t";
         } else {
-            return "jdbc:mariadb://localhost:3306/kitcheninventory_test?user=travis&password=";
+            url = "jdbc:mariadb://localhost:3306/kitcheninventory_test?user=travis&password=";
         }
+
+        return DriverManager.getConnection(url);
     }
 
     private static Boolean isTestEnv(String[] args) {
