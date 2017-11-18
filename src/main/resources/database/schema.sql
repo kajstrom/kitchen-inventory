@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS ingredients;
 DROP TABLE IF EXISTS ingredient_types;
 
 CREATE TABLE ingredient_types(
@@ -5,8 +6,6 @@ CREATE TABLE ingredient_types(
     name VARCHAR(200) NOT NULL,
     quantity_unit VARCHAR(100) NOT NULL
 ) ENGINE InnoDb;
-
-DROP TABLE IF EXISTS ingredients;
 
 CREATE TABLE ingredients(
     ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
