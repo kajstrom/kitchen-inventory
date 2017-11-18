@@ -36,7 +36,7 @@ public class IngredientTypeGateway {
             }
 
         } catch (SQLException e) {
-            System.out.println("Query error!");
+            System.out.println("Query error: " + e.getMessage());
         }
 
         return all;
